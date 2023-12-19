@@ -19,6 +19,7 @@ func main() {
 func map1() {
 	var m0 map[string]int // nil
 	fmt.Println(m0 == nil)
+
 	m1 := map[string]int{
 		"111": 1,
 		"222": 2,

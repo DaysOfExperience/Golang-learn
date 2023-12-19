@@ -36,8 +36,8 @@ func Slice0() {
 func Slice1() {
 	// 切片的定义
 	var sli1 []int               // 声明切片 nil
-	var sli2 = []int{1, 2, 3, 4} // 定义切片
-	var sli3 = []int{}           // 定义切片
+	var sli2 = []int{1, 2, 3, 4} // 定义切片 非nil
+	var sli3 = []int{}           // 定义切片 非nil
 	// 切片只能和nil比较, 因为是引用类型
 	fmt.Println(sli1, sli2, sli3)
 	fmt.Println(sli1 == nil, sli2 == nil, sli3 == nil)
