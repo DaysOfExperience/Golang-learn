@@ -152,6 +152,8 @@ func fun3() func(int) { // 返回值: 一个函数, int参数且无返回值
 func fun33() {
 	f := fun3()
 	f(2)
-}
 
-// 闭包:
+	type func_ = func(int, int) int
+	var f_ func_ // nil
+	fmt.Println(f_ == nil)
+}
