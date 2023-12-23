@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	myPackage "/../Struct/Test/myPackage"
+	"fmt"
+)
 
 // 结构体匿名字段
 // 默认会采用类型名作为字段名. 故, 同一类型的字段只能有一个
@@ -53,7 +56,7 @@ type t3 struct {
 	t2
 }
 
-func test1() {
+func test3() {
 	o := t3{
 		name: "hhh",
 		t1: t1{
@@ -77,7 +80,7 @@ type Animal struct {
 	name string
 }
 
-func (a Animal) eat(food string) {
+func (a *Animal) eat(food string) {
 	fmt.Println(a.name, "eats", food)
 }
 
@@ -92,16 +95,31 @@ func (w Wolf) wolf() {
 	// 狼会wolf
 	fmt.Println("wolf~~~~~~")
 }
-func test2() {
+func testz() {
 	w := Wolf{
 		1,
 		Animal{
-			"hhh",
+			"nnnname",
 		},
 	}
 	w.eat("zzz")
 }
+
+// 探索字段可见性
+func test4() {
+	myPackage.sayHello()
+	myPackage.SayHello()
+	num := myPackage.number
+	num2 := myPackage.Number
+	fmt.Println(num, num2)
+	test2()
+}
+
+// Tag
 func main() {
 	// test()
-	test1()
+	// test1()
+	// test2()
+	//test3()
+	testz()
 }
