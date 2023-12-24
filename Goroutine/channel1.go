@@ -122,6 +122,54 @@ func test5() {
 	consumer(ch)
 	//wg3.Wait()
 }
+
+// worker pool: goroutine池
+func worker(id int, jobs <-chan int, results chan<- int) {
+	for job := range jobs {
+		fmt.Printf("worker#%d gets job#%d\n", id, job)
+		results <- job * 2
+		time.Sleep(time.Millisecond * 500)
+	}
+}
+func test6() {
+	jobs := make(chan int, 100)
+	results := make(chan int, 200)
+
+	for j := 0; j < 5; j++ {
+		// 开启5个goroutine
+		go worker(j, jobs, results)
+	}
+	for i := 0; i < 100; i++ {
+		// 发送100个任务到任务池中
+		jobs <- i
+	}
+	close(jobs) // 发送完毕close channel
+	// 输出这些任务的执行结果
+	for i := 0; i < 100; i++ {
+		ret := <-results // 取出结果
+		fmt.Printf("%v\n", ret)
+	}
+	//close(results) // 不能for range 因为生产者那边没有进行close
+}
+
+// select
+
+// 其实就是把一个channel当作一个套接字, 和网络的IO多路复用非常像!!!!
+// 可处理一个或多个 channel 的发送/接收操作。
+// 如果多个 case 同时满足，select 会随机选择一个执行。
+// 对于没有 case 的 select 会一直阻塞，可用于阻塞 main 函数，防止退出。
+// 每个 case 分支会对应一个通道的通信（接收或发送）过程。
+func test7() {
+	//ch := make(chan int, 1)
+	ch := make(chan int, 10)
+	for i := 0; i < 10; i++ {
+		select {
+		case num := <-ch:
+			fmt.Printf("get num:%d\n", num)
+		case ch <- i:
+		}
+	}
+}
 func main() {
-	test5()
+	test6()
 }
