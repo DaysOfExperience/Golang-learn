@@ -1,7 +1,7 @@
 package main
 
 import (
-	myPackage "/../Struct/Test/myPackage"
+	//myPackage "/../Struct/Test/myPackage"
 	"fmt"
 )
 
@@ -91,7 +91,7 @@ type Wolf struct {
 	Animal
 }
 
-func (w Wolf) wolf() {
+func (w *Wolf) wolf() {
 	// 狼会wolf
 	fmt.Println("wolf~~~~~~")
 }
@@ -99,21 +99,30 @@ func testz() {
 	w := Wolf{
 		1,
 		Animal{
-			"nnnname",
+			"seven",
 		},
 	}
-	w.eat("zzz")
+	w.eat("orange")
+	w.wolf()
+	p_w := &Wolf{
+		1,
+		Animal{
+			"aa",
+		},
+	}
+	p_w.eat("apple")
+	p_w.wolf()
 }
 
 // 探索字段可见性
-func test4() {
-	myPackage.sayHello()
-	myPackage.SayHello()
-	num := myPackage.number
-	num2 := myPackage.Number
-	fmt.Println(num, num2)
-	test2()
-}
+//func test4() {
+//	myPackage.sayHello()
+//	myPackage.SayHello()
+//	num := myPackage.number
+//	num2 := myPackage.Number
+//	fmt.Println(num, num2)
+//	test2()
+//}
 
 // Tag
 func main() {

@@ -8,8 +8,8 @@ func main() {
 }
 
 func arr1() {
-	var arr1 = [3]int{1, 2, 3} // 定义并初始化全部元素
 	var arr2 [4]int            // 定义一个数组, 自动初始化为默认值
+	var arr1 = [3]int{1, 2, 3} // 定义并初始化全部元素
 	var arr3 [3]int
 	arr3 = arr1
 	// arr2 = arr1     // arror
@@ -73,29 +73,31 @@ func arr3() {
 		fmt.Println()
 	}
 }
+
+// 参数是副本, 值类型
 func test(a [3]int) {
 	a[0] = 100
 }
 func arr4() {
 	// 数组是值类型
-	// 数组是值类型，赋值和传参会复制整个数组。因此改变副本的值，不会改变本身的值。
+	// 赋值和传参会复制整个数组。因此改变副本的值，不会改变本身的值。
 	// 数组的传参/赋值, 都是拷贝构造或拷贝赋值
-	// 数组支持 “=="、”!=" 操作符，因为内存总是被初始化过的。
 	arr := [3]int{1, 2, 3}
 	test(arr)
-	fmt.Println(arr)
+	fmt.Println(arr) // 123
 
 	i := 10
 	var ptr *int = &i
 	var pptr **int = &ptr
-	println(ptr, pptr)
-	var p *[3]int = &arr
-	arr2 := *p
-	fmt.Println(arr2)
+	fmt.Println(ptr, pptr) // 两个指针
+	var p *[3]int = &arr   // 数组指针
+	arr2 := *p             // 数组, 拷贝构造
+	fmt.Println(arr2)      // 123
 	arr2[1] = 10
-	fmt.Println(arr)
-	fmt.Println(arr2)
-	fmt.Println(arr == arr2)
+	fmt.Println(arr)  // 123
+	fmt.Println(arr2) // 1103
+	// 数组支持 “=="、”!=" 操作符，因为内存总是被初始化过的。
+	fmt.Println(arr == arr2) // false
 	arr2[1] = 2
-	fmt.Println(arr == arr2)
+	fmt.Println(arr == arr2) // true
 }

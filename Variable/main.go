@@ -1,12 +1,9 @@
 package main
 
+// 变量 && 常量 && iota
 import (
 	"fmt"
 )
-
-func add_plus() (int, int) {
-	return 1, 2
-}
 
 var Age = 11
 var Salary = 12
@@ -14,7 +11,17 @@ var Salary = 12
 // Age2 := 13     // error
 
 func main() {
-	// 变量的标准声明格式
+	variable_test()
+	fmt.Println("-----------------------------------------")
+	const_test()
+	fmt.Println("-----------------------------------------")
+	iota_test()
+}
+func add_plus() (int, int) {
+	return 1, 2
+}
+func variable_test() {
+	// 变量的标准声明格式, 值为对应类型的默认值, 因为声明时没有进行初始化
 	var name string
 	var age int
 	var job string
@@ -22,10 +29,10 @@ func main() {
 	fmt.Println(name+"11", age, job+"22", dict)
 	// 批量声明
 	var (
-		a string = "hehe"
-		b int    = 11
+		a string
+		b int
 		c int64
-		d float32
+		d float32 = 2.2 // 声明且初始化
 		e map[int]int
 	)
 	fmt.Println(a, b, c, d, e == nil)
@@ -39,8 +46,7 @@ func main() {
 	fmt.Println(name1, age1, name2, age2)
 
 	// 短变量声明, 最常用的, 也就是上方这个的进一步简化
-	// 函数外的每个语句都必须以关键字开始（var、const、func等） 因此:=不能使用在函数外。
-	// 只能用于函数内
+	// 函数外的每个语句都必须以关键字开始（var、const、func等） 因此:=不能使用在函数外, 只能用于函数内
 	name3 := "son of a bitch"
 	age3 := 19
 	fmt.Println(name3, age3)
@@ -49,14 +55,10 @@ func main() {
 	// 匿名变量不占用命名空间，不会分配内存，所以匿名变量之间不存在重复声明。
 	num1, _ := add_plus()
 	fmt.Println(num1)
-
-	fmt.Println("-----------------------------------------")
-	const_test()
-	fmt.Println("-----------------------------------------")
-	iota_test()
 }
 
 func const_test() {
+	// 常量在定义的时候必须赋值。
 	const name string = "hhh"
 	const age int = 18
 	// const age2 := 3   //  error
@@ -70,8 +72,8 @@ func const_test() {
 }
 
 // iota是go语言的常量计数器，只能在常量的表达式中使用。
-// iota在const关键字出现时将被重置为0。const中每新增一行常量声明将使iota计数一次(iota可理解
-// 为const语句块中的"行索引")。 使用iota能简化定义，在定义枚举时很有用。
+// iota在const关键字出现时将被重置为0. const中每新增一行常量声明将使iota计数一次
+// !!! iota可理解 为const语句块中的"行索引"  使用iota能简化定义，在定义枚举时很有用。
 
 // 也就是你在这个const这个批量声明里面是第几行
 func iota_test() {
@@ -79,7 +81,14 @@ func iota_test() {
 		a, b = iota, iota
 		c    = iota
 		d    = 1999
-		e    = iota
+		_
+		e = iota
 	)
 	fmt.Println(a, b, c, d, e)
+
+	const (
+		a1, b1 = iota + 1, iota + 2 //1,2
+		c1, d1                      //2,3
+		e1, f1                      //3,4
+	)
 }

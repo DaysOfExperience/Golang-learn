@@ -82,6 +82,7 @@ func test1() {
 // 值接收者和指针接收者
 // 1. 类型使用值接收者实现接口所规定的方法之后，不管是结构体类型对象还是对应的结构体指针类型的变量都可以赋值给该接口变量。
 // 2. 类型使用指针接收者实现接口所规定的方法之后, 只能将结构体指针类型的变量赋值给该接口的变量
+// 当然, 只有你能够赋值给这个接口的变量之后, 才能用这个接口去调用方法
 type Animal interface {
 	say()
 }
@@ -110,7 +111,7 @@ func test2() {
 // 类型和接口的关系
 // 多种类型可以实现同一接口
 // 一个类型可以实现多个接口
-// 接口两个方法, 类型实现了方法2, 类型的数据成员是另一个类型, 则若另一个类型实现了方法1, 则视为类型实现了该接口
+// 接口两个方法, x类型实现了方法2, 类型的数据成员是y类型对象, 则若y类型实现了方法1, 则视为x类型实现了该接口
 type inter interface {
 	fun1()
 	fun2()
@@ -136,7 +137,7 @@ func test3() {
 	i.fun2()
 }
 
-// 接口组合
+// 接口组合(todo..)
 // 接口与接口之间可以通过互相嵌套形成新的接口类型
 // 结构体也可以将接口作为自己的一个字段
 
@@ -165,7 +166,7 @@ func show(a interface{}) {
 func test5() {
 	m := map[string]interface{}{}
 	m["int"] = 1
-	m["string"] = "sssstring"
+	m["string"] = "sss_string"
 	m["map"] = map[int]int{1: 2, 2: 4}
 	m["bool"] = false
 	fmt.Println(m)
@@ -201,7 +202,7 @@ func test7() {
 	// fmt包内部使用反射的机制在程序运行时获取到动态类型的名称。 反射之后再说
 
 	//类型断言:
-	value, ok := p.(*Student) // 若断言失败, 则value就是对应类型的零值
+	value, ok := p.(*Student) // 若断言失败, 则value就是对应类型的零值 (和map很像)
 	if ok {
 		fmt.Println("p的动态类型是*Student类型, vlaue: ", value)
 	} else {
@@ -213,6 +214,7 @@ func test7() {
 // 切记不要为了使用接口类型而增加不必要的抽象，导致不必要的运行时损耗。
 // 接口是一种类型，一种抽象的类型。
 // 摘自gin框架routergroup.go
+
 type IRouter interface {
 	//...
 }

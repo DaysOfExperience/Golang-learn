@@ -8,11 +8,11 @@ import (
 
 // map 引用类型, 声明后如果不初始化就是nil
 func main() {
-	// map1()
-	// map2()
-	// map3()
-	// map4()
-	// map5()
+	//map1()
+	//map2()
+	//map3()
+	map4()
+	map5()
 	map6()
 }
 
@@ -33,6 +33,7 @@ func map1() {
 	fmt.Println(len(m2), m2)
 
 	// 判断某个key是否存在
+	// 如果key存在ok为true,v为对应的值；不存在ok为false,v为值类型的零值
 	value, ok := m2["hehe"]
 	if ok {
 		fmt.Println(value)
@@ -43,7 +44,7 @@ func map1() {
 	if ok {
 		fmt.Println(value)
 	} else {
-		fmt.Println("zzz is not exist")
+		fmt.Println("zzz is not exist", value) // 不存在, 则value为零值
 	}
 
 	// map 遍历
@@ -83,7 +84,7 @@ func map2() {
 
 func map3() {
 	// 切片保存的元素类型为map
-	sli := []map[string]int{} // 不是nil但是切片数组中没有元素
+	sli := []map[string]int{} // 不是nil, 已初始化
 	fmt.Println(sli == nil)
 	sli = append(sli, make(map[string]int, 10)) // 添加了一个map, 此map初始容量为10, 但是没有元素
 	fmt.Println(sli)
@@ -96,7 +97,7 @@ func map3() {
 	sli = append(sli, make(map[string]int))
 	fmt.Println(sli)
 
-	mapSlice := make([]map[string]int, 3) // 切片元素为三个nil
+	mapSlice := make([]map[string]int, 3) // 切片元素为三个nil 引用类型, 默认值为nil嘛
 	fmt.Println(mapSlice)
 	for _, m := range mapSlice {
 		if m == nil {
@@ -114,11 +115,18 @@ func map4() {
 	value := m["hhh"]
 	fmt.Printf("type of value:%T\n", value)
 	for i := 3; i <= 10; i++ {
-		value = append(value, i)
+		value = append(value, i) // 对value的修改就是对map中对应的值的修改
 	}
 	fmt.Println(value)
-	m["hhh"] = value // 必须赋值
-	fmt.Print(m)
+	fmt.Println(m)
+	m["hhh"] = value // 必须赋值, 因为append导致value扩容, 指向新的位置了
+	fmt.Println(m)
+
+	fmt.Println()
+	sli := []int{1, 2, 3}
+	s := sli
+	s[0] = 100
+	fmt.Println(sli)
 }
 
 func map5() {
@@ -140,8 +148,9 @@ func map5() {
 	}
 	fmt.Println("_________________________")
 	m2 := make(map[int]int)
-	fmt.Println(m2[1]) // 0?????
+	fmt.Println(m2[1]) // 0, 默认值嘛
 	fmt.Println(m2)
+	fmt.Println("_________________________")
 }
 
 // 简单来说, 两个切片就有两个len, 即使是同一个底层数组!!!懂了吗?
@@ -151,10 +160,12 @@ func map6() {
 	s := []int{1, 2}
 	s = append(s, 3)       // 123
 	fmt.Printf("%+v\n", s) // 123
-	m["zzz"] = s           // "q1mi" : [1,2,3]
+	m["zzz"] = s           // "zzz" : [1,2,3]
 	fmt.Printf("%+v\n", m["zzz"])
-	s = append(s[:1], s[2:]...) // [1,3]
-	fmt.Printf("%+v\n", s)      // [1,3]
-	fmt.Printf("%+v\n", m["zzz"])
-	fmt.Printf("%p, %p", s, m["zzz"])
+	fmt.Println(len(s), len(m["zzz"])) // 3 3
+	s = append(s[:1], s[2:]...)        // [1,3]
+	fmt.Printf("%+v\n", s)             // [1,3]
+	fmt.Printf("%+v\n", m["zzz"])      // 1 3 3
+	fmt.Println(len(s), len(m["zzz"])) // 2 3
+	fmt.Printf("%p, %p", s, m["zzz"])  // 地址一样, 但是len不同!!!!
 }

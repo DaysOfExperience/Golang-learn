@@ -69,6 +69,11 @@ func newPerson(name string, age int, city string) *person {
 //     函数体
 // }
 // 差别只是函数名前指定一下这是哪个类的方法
+
+// 注意: 结构体对象可以调用接收值类型方法, 也可以调用接收结构体指针的放啊
+// 结构体指针同样都可以调用
+// 区别只是, 传参速度以及结构体指针可以修改数据成员
+// 所以说, 继承那块, 不管base的方法是什么类型的接收, 都无所谓, 都可以的~
 func (p *person) changeName(s string) {
 	p.name = s
 }

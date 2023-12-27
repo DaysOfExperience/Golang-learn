@@ -7,7 +7,7 @@ import (
 
 // 函数 - 匿名函数与闭包
 
-func func1() {
+func func9() {
 	// 1. 匿名函数保存在变量中
 	fun := func(a int, b int) int {
 		return a + b
@@ -34,12 +34,12 @@ func func1() {
 // 疑惑: 为什么局部变量x在adder执行结束后, 在后续的闭包执行时, x可以一直维持这个累加状态?
 // gpt4: 您的疑问非常合理，这涉及到闭包的一个核心特性：闭包能够捕获并持有其外部作用域中的变量，即使外部函数的执行已经完成。
 // 在 Go 语言中，当一个函数（如 adder）返回一个闭包时，这个闭包会记住并持有它所捕获的变量（如 x）的引用。
-// 持久性状态：即使 adder 函数执行完毕，局部变量 x 并不会像通常的局部变量那样消失。相反，由于闭包仍在引用
-// x，因此 x 的生命周期会延续，直到闭包本身不再被使用。
+// 持久性状态：即使 adder 函数执行完毕，局部变量 x 并不会像通常的局部变量那样消失。
+// 相反，由于闭包仍在引用 x，因此 x 的生命周期会延续，直到闭包本身不再被使用。
 // 封闭作用域：x 对于 adder 函数外的其他部分是不可见的。它只在闭包内部可见且可修改。
 // 这提供了一种封装变量的方式，使得变量的作用域限定在闭包内。
 
-// 每次调用 adder 函数时，它都会创建一个新的局部变量 x 和一个新的闭包。
+// 每次调用 adder 函数时，它都会创建一个新的局部变量 x 和一个新的闭包。 也就是x与闭包是一对一的
 // 这个闭包持有对其自己版本的 x 的引用。每次调用闭包时，都会修改它所持有的那个特定 x 的值。
 // 这就是为什么即使 adder 函数的执行已经完成，闭包仍然能够访问并修改 x 的原因。
 func adder() func(int) int {
@@ -75,10 +75,14 @@ func test_suffix() {
 
 	hello := txtSuffix("hello.txt")
 	fmt.Println(hello)
+
+	exeSuffix := makeSuffixFunc(".exe")
+	file := exeSuffix("golang")
+	fmt.Println(file)
 }
 func main() {
 	// test_adder()
-	test_suffix()
+	// test_suffix()
 }
 
 // panic / recover

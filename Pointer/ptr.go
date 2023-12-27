@@ -103,8 +103,8 @@ func test_make() {
 // 2. make只用于slice、map以及channel的初始化，返回的还是这三个引用类型本身；
 // 3. 而new用于类型的内存分配，并且内存对应的值为类型零值，返回的是指向类型的指针。
 func main() {
-	// ptr1()
-	// ptr2()
-	// test_new()
+	ptr1()
+	ptr2()
+	test_new()
 	test_make()
 }

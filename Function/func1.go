@@ -89,8 +89,10 @@ func test_return(s string) func(int, int) int {
 		return sub
 	} else if s == "/" {
 		return div
-	} else {
+	} else if s == "%" {
 		return mod
+	} else {
+		return nil
 	}
 }
 
@@ -122,7 +124,7 @@ func func6() {
 	defer calc("AA", x, calc("A", x, y)) // 这里: A 1 2 3
 	x = 10
 	defer calc("BB", x, calc("B", x, y)) // 这里: B 10 2 12
-	y = 20
+	y = 20                               // 没用
 	// 返回之前: BB 10 12 22
 	// AA 1 3 4
 }
@@ -133,7 +135,7 @@ func func6() {
 // AA 1 3 4
 
 // 匿名函数: 和普通函数的定义的唯一区别就是 没有函数名
-func fun3() func(int) { // 返回值: 一个函数, int参数且无返回值
+func func7() func(int) { // 返回值: 一个函数, int参数且无返回值
 	// 下面就是一个匿名函数
 	// 匿名函数可以直接定义+执行, 也可以赋值给一个变量, 也就是函数变量
 	fun := func() {
@@ -149,8 +151,8 @@ func fun3() func(int) { // 返回值: 一个函数, int参数且无返回值
 		fmt.Println(x)
 	}
 }
-func fun33() {
-	f := fun3()
+func func8() {
+	f := func7()
 	f(2)
 
 	type func_ = func(int, int) int
