@@ -18,40 +18,38 @@ func print() {
 	fmt.Println("Just do it")
 	wg.Done()
 }
+func test0() {
+	wg.Add(1)
+	go print()
+	fmt.Println("main func printing")
+	for i := 0; i < 10; i++ {
+		wg.Add(1)
+		go func(num int) { // 这里不要实现闭包
+			fmt.Println(num)
+			wg.Done()
+		}(i)
+	}
+	wg.Wait()
+}
 
-//func main() {
-//	wg.Add(1)
-//	go print()
-//	fmt.Println("main func printing")
-//	for i := 0; i < 10; i++ {
-//		wg.Add(1)
-//		go func(num int) {   // 这里不要实现闭包
-//			fmt.Println(num)
-//			wg.Done()
-//		}(i)
-//	}
-//	wg.Wait()
-//}
-
-func fun1() {
+func func1() {
 	for i := 0; i < 10000; i++ {
 		fmt.Println("func1", i)
 	}
 	wg.Done()
 }
 
-func fun2() {
+func func2() {
 	for i := 0; i < 10000; i++ {
 		fmt.Println("func2", i)
 	}
 	wg.Done()
 }
 func test2() {
-
 	runtime.GOMAXPROCS(1) // 即使是核心数为1, 也是并发, fun1 fun2也不是串型的
 	wg.Add(2)
-	go fun1()
-	go fun2()
+	go func1()
+	go func2()
 	wg.Wait()
 }
 func main() {

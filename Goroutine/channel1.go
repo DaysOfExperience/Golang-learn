@@ -30,6 +30,7 @@ func get(ch chan string, group *sync.WaitGroup) {
 }
 func put(ch chan string, group *sync.WaitGroup) {
 	ch <- "Just Do It"
+	close(ch)
 	group.Done()
 }
 
@@ -76,7 +77,6 @@ func get2(ch chan int) {
 	}
 	fmt.Println("chan is empty and closed")
 	wg2.Done()
-
 	// 注意: 目前Go语言中并没有提供一个不对通道进行读取操作就能判断通道是否被关闭的方法。
 }
 func test4() {
