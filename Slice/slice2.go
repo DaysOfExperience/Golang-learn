@@ -50,7 +50,19 @@ func test2() {
 	//[0 0 0 0 5], address:0xc000008060, 0xc000010240
 }
 
+func test3() {
+	s1 := []int{1, 2, 3, 4, 5}
+	s2 := make([]int, 3)
+	s3 := make([]int, 0)
+	s4 := make([]int, 10)
+	n2 := copy(s2, s1) // 3
+	n3 := copy(s3, s1) // 0
+	n4 := copy(s4, s1) // 5
+	fmt.Println(n2, n3, n4)
+}
+
 func main() {
-	test1()
+	//test1()
 	//test2()
+	test3()
 }
