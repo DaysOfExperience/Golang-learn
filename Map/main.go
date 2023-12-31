@@ -167,5 +167,5 @@ func map6() {
 	fmt.Printf("%+v\n", s)             // [1,3]
 	fmt.Printf("%+v\n", m["zzz"])      // 1 3 3
 	fmt.Println(len(s), len(m["zzz"])) // 2 3
-	fmt.Printf("%p, %p", s, m["zzz"])  // 地址一样, 但是len不同!!!!
+	fmt.Printf("%p, %p", s, m["zzz"])  // 地址一样, 但是len不同!!!
 }
